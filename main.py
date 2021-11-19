@@ -7,21 +7,15 @@ import RL_defs as rl
 import copy
 from tqdm import tqdm
 import time
+import pickle
+import multiprocessing
+
+multiprocessing.set_start_method('fork')
 
 pokemon1 = poke.Squirtle()
 pokemon2 = poke.Charmander()
 
 import sys, os
-
-class HiddenPrints:
-    def __enter__(self):
-        self._original_stdout = sys.stdout
-        sys.stdout = open(os.devnull, 'w')
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        sys.stdout.close()
-        sys.stdout = self._original_stdout
-
 
 # Create various moves for the pokemon
 move1 = poke.move(name='tackle',
@@ -49,10 +43,10 @@ move4 = poke.move(name='snooze',
                 stat_red=None)
 
 poke.turn(pokemon1, pokemon2, move1, move4)
-ut.summary(pokemon1)
-ut.summary(pokemon2)
+# ut.summary(pokemon1)
+# ut.summary(pokemon2)
 
-
+"""
 # RL stuff
 HPs = np.arange(21)
 attack_def_diff = np.arange(-6,7)
@@ -119,13 +113,37 @@ while iter_diff>eps:
     iter_time = time.time()
     if (iter_time - start_time)//60 > 2:
         break
+"""
+
+moves = [move1, move2, move3, move4]
+alphas = np.arange(0.1, 1, 0.1)
+gammas = np.arange(0.1, 1, 0.1)
+
+hyperparams = list(itertools.product(alphas, gammas))
+
+paramslist = [[moves, i] for i in hyperparams]
+
+convergence_times = np.zeros((len(alphas), len(gammas)))
+
+pool = multiprocessing.Pool()
+convergence_times = pool.map(rl.Q_learning_parallel, paramslist)
+
+# for row, alpha in enumerate(alphas):
+#    for col,gamma in enumerate(gammas):
+#        print(row, col)
+#        Q_dict, convergence_time = rl.Q_learning_base(moves, alpha, gamma)
+#        convergence_times[row, col] = convergence_time
 
 
+with open('convergence_times.pickle', 'wb') as f:
+    pickle.dump(convergence_times, f)
+
+"""
 # Simulate a game
 pokemon1 = poke.Squirtle()
 pokemon2 = poke.Charmander()
 
-init_state = (20,0)
+init_state = (20,20,0)
 state = init_state
 moves = []
 while (pokemon2.HP>0):
@@ -139,3 +157,4 @@ while (pokemon2.HP>0):
     poke.turn(pokemon1, pokemon2, move, move4)
     moves.append(move.name)
     state = rl.get_state(pokemon1, pokemon2)
+"""
