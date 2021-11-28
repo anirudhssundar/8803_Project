@@ -1,5 +1,6 @@
 import numpy as np
 import functools
+import os,sys
 
 def damage(pokemon1, pokemon2, move):
 
@@ -11,6 +12,7 @@ def damage(pokemon1, pokemon2, move):
             print(f"{pokemon1.name}'s {move.name} missed!'")
             return 0.0
 
+    # NOT CONSIDERING CRITS FOR KICKS
         elif is_crit < 16:
             print("It's a critical hit!")
             Level = 5 # Attacker's level
@@ -96,3 +98,26 @@ def get_stat_multiplier(stage):
     }
 
     return stat_mult_dict[stage]
+
+class HiddenPrints:
+    def __enter__(self):
+        self._original_stdout = sys.stdout
+        sys.stdout = open(os.devnull, 'w')
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        sys.stdout.close()
+        sys.stdout = self._original_stdout
+
+
+def avg_convergence_time():
+    times = []
+    for file in os.listdir('logs/'):
+        with open(f'logs/{file}', 'rb') as f:
+            data = pickle.load(f)
+        if len(times) == 0:
+            times = np.array([i[1] for i in data])
+        else:
+            times += np.array([i[1] for i in data])
+        del data
+    print(np.argmin(times), min(times)/len(os.listdir('logs/')))
+    return times

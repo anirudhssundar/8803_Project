@@ -1,4 +1,5 @@
 import utils as ut
+import numpy as np
 
 
 class Squirtle:
@@ -118,6 +119,68 @@ def turn(pokemon1, pokemon2, pk1_move, pk2_move):
             print(f"{pokemon2.name} is unable to battle")
             return 1
 
+    if pokemon1.spd == pokemon2.spd:
+        # Speed tie, choose randomly
+        cointoss = np.random.choice([0,1])
+        if cointoss:
+            if pk1_move.isdmg:
+                dmg = ut.damage(pokemon1, pokemon2, pk1_move)
+                pokemon2.HP = pokemon2.HP - dmg
+            elif not(pk1_move.isdmg):
+                ut.damage(pokemon1, pokemon2, pk1_move)
+            if pokemon2.HP <=0:
+                pokemon2.HP = 0
+                print(f"{pokemon2.name} is unable to battle")
+                return 1
+
+
+            if pk2_move.isdmg:
+                dmg = ut.damage(pokemon2, pokemon1, pk2_move)
+                pokemon1.HP = pokemon1.HP - dmg
+            elif not(pk2_move.isdmg):
+                ut.damage(pokemon2, pokemon1, pk2_move)
+            if pokemon1.HP <=0:
+                pokemon1.HP = 0
+                print(f"{pokemon1.name} is unable to battle")
+                return 0
+        else:
+            if pk2_move.isdmg:
+                dmg = ut.damage(pokemon2, pokemon1, pk2_move)
+                pokemon1.HP = pokemon1.HP - dmg
+            elif not(pk2_move.isdmg):
+                ut.damage(pokemon2, pokemon1, pk2_move)
+            if pokemon1.HP <=0:
+                pokemon1.HP = 0
+                print(f"{pokemon1.name} is unable to battle")
+                return 0
+
+            if pk1_move.isdmg:
+                dmg = ut.damage(pokemon1, pokemon2, pk1_move)
+                pokemon2.HP = pokemon2.HP - dmg
+            elif not(pk1_move.isdmg):
+                ut.damage(pokemon1, pokemon2, pk1_move)
+            if pokemon2.HP <=0:
+                pokemon2.HP = 0
+                print(f"{pokemon2.name} is unable to battle")
+                return 1
+
+
+def sim_game(pokemon1, pokemon2, Q_dict, moves):
+
+    init_state = (20,20,0)
+    state = init_state
+    moves = []
+    while (pokemon2.HP>0):
+        value_action_0 = Q_dict[(state, 0)]
+        value_action_1 = Q_dict[(state, 1)]
+
+        if value_action_0 > value_action_1:
+            move = move1
+        else:
+            move = move2
+        poke.turn(pokemon1, pokemon2, move, move4)
+        moves.append(move.name)
+        state = rl.get_state(pokemon1, pokemon2)
 
 
 
