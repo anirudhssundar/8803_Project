@@ -8,9 +8,9 @@ import copy
 from tqdm import tqdm
 import time
 import pickle
-# import multiprocessing
+import multiprocessing
 
-# multiprocessing.set_start_method('fork')
+multiprocessing.set_start_method('fork')
 
 pokemon1 = poke.Squirtle()
 pokemon2 = poke.Charmander()
@@ -42,7 +42,7 @@ move4 = poke.move(name='snooze',
                 acc=-1,
                 stat_red=None)
 
-poke.turn(pokemon1, pokemon2, move1, move4)
+# poke.turn(pokemon1, pokemon2, move1, move4)
 # ut.summary(pokemon1)
 # ut.summary(pokemon2)
 
@@ -53,12 +53,12 @@ gammas = np.arange(0.1, 0.9, 0.1)
 hyperparams = list(itertools.product(alphas, gammas))
 
 paramslist = [[moves, i] for i in hyperparams]
-"""
+
 for run in tqdm(range(50)):
     convergence_times = np.zeros((len(alphas), len(gammas)))
 
-    pool = multiprocessing.Pool()
-    convergence_times = pool.map(rl.Q_learning_parallel, paramslist)
+    with multiprocessing.Pool(32) as pool:
+        convergence_times = pool.map(rl.Q_learning_parallel, paramslist)
 
     # for row, alpha in enumerate(alphas):
     #    for col,gamma in enumerate(gammas):
@@ -69,7 +69,7 @@ for run in tqdm(range(50)):
 
     with open(f'logs/convergence_times_{run}.pickle', 'wb') as f:
         pickle.dump(convergence_times, f)
-"""
+
 moves = [move1, move2, move3, move4]
 alpha=0.25
 gamma=0.9

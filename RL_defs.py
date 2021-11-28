@@ -343,7 +343,7 @@ def Q_learning_parallel(params):
     move2 = moves[1]
     move3 = moves[2]
     move4 = moves[3]
-    HPs = np.arange(21)
+    HPs = np.arange(22)
     attack_def_diff = np.arange(-6,7)
 
     states = list(itertools.product(HPs, HPs, attack_def_diff))
@@ -363,7 +363,7 @@ def Q_learning_parallel(params):
 
     state_visit_count = dict(zip(states, np.zeros(len(states))))
 
-    init_state = (20,20,0)
+    # init_state = (20,20,0)
 
     action = move1
 
@@ -381,7 +381,7 @@ def Q_learning_parallel(params):
         with ut.HiddenPrints():
             pokemon1 = poke.Squirtle()
             pokemon2 = poke.Charmander()
-            while(pokemon2.HP>0):
+            while((pokemon2.HP>0) and (pokemon1.HP>0)):
 
                 state = rl.get_state(pokemon1, pokemon2)
                 action = np.random.choice([0,1]) # Choose actions randomly (epsilon greedy with eps = 0.5)
@@ -409,4 +409,5 @@ def Q_learning_parallel(params):
         if (iter_time - start_time)//60 > 10:
             print("TIMEOUT")
             break
-    return Q_dict, (iter_time - start_time)
+    # return Q_dict, (iter_time - start_time)
+    return iter_time - start_time
