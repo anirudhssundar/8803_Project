@@ -10,7 +10,7 @@ import time
 import pickle
 import multiprocessing
 
-multiprocessing.set_start_method('spawn')
+# multiprocessing.set_start_method('fork')
 
 pokemon1 = poke.Squirtle()
 pokemon2 = poke.Charmander()
@@ -57,14 +57,15 @@ paramslist = [[moves, i] for i in hyperparams]
 for run in tqdm(range(50)):
     convergence_times = np.zeros((len(alphas), len(gammas)))
 
-    with multiprocessing.Pool(32) as pool:
-        convergence_times = pool.map(rl.Q_learning_parallel, paramslist)
+    # with multiprocessing.Pool(32) as pool:
+    #     convergence_times = pool.map(rl.Q_learning_parallel, paramslist)
 
-    # for row, alpha in enumerate(alphas):
-    #    for col,gamma in enumerate(gammas):
-    #        print(row, col)
-    #        Q_dict, convergence_time = rl.Q_learning_base(moves, alpha, gamma)
-    #        convergence_times[row, col] = convergence_time
+    for row, alpha in enumerate(alphas):
+        for col,gamma in enumerate(gammas):
+            print(row, col)
+            # Q_dict, convergence_time = rl.Q_learning_base(moves, alpha, gamma)
+            convergence_time = rl.Q_learning_base(moves, alpha, gamma)
+            convergence_times[row, col] = convergence_time
 
 
     with open(f'logs/convergence_times_{run}.pickle', 'wb') as f:
