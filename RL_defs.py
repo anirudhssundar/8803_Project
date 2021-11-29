@@ -57,7 +57,7 @@ def Q_learning_base(moves, alpha, gamma):
     # alpha = 0.25
     # gamma = 0.95
 
-    eps = 1e-4
+    eps = 1e-3
     iter_diff = eps + 3
 
     start_time = time.time()
@@ -93,7 +93,7 @@ def Q_learning_base(moves, alpha, gamma):
 
         iter_diff = abs(Q_init_norm - Q_iter_norm)
         iter_time = time.time()
-        if (iter_time - start_time)//60 > 10:
+        if (iter_time - start_time)//60 > 5:
             print("TIMEOUT")
             break
     # return Q_dict, (iter_time - start_time)
@@ -370,7 +370,7 @@ def Q_learning_parallel(params):
     # alpha = 0.25
     # gamma = 0.95
 
-    eps = 1e-4
+    eps = 1e-3
     iter_diff = eps + 3
 
     start_time = time.time()

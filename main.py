@@ -47,8 +47,8 @@ move4 = poke.move(name='snooze',
 # ut.summary(pokemon2)
 
 moves = [move1, move2, move3, move4]
-alphas = np.arange(0.1, 0.9, 0.1)
-gammas = np.arange(0.1, 0.9, 0.1)
+alphas = np.arange(0.1, 0.9, 0.3)
+gammas = np.arange(0.1, 0.9, 0.3)
 
 hyperparams = list(itertools.product(alphas, gammas))
 
