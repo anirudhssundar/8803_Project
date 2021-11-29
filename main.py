@@ -47,28 +47,30 @@ move4 = poke.move(name='snooze',
 # ut.summary(pokemon2)
 
 moves = [move1, move2, move3, move4]
-alphas = np.arange(0.1, 0.9, 0.2)
-gammas = np.arange(0.1, 0.9, 0.3)
+alphas = np.arange(0.1, 0.9, 0.1)
+# gammas = np.arange(0.1, 0.9, 0.3)
 
-hyperparams = list(itertools.product(alphas, gammas))
+# hyperparams = list(itertools.product(alphas, gammas))
 
-paramslist = [[moves, i] for i in hyperparams]
+# paramslist = [[moves, i] for i in hyperparams]
 
-for run in tqdm(range(10)):
-    convergence_times = np.zeros((len(alphas), len(gammas)))
-
+for run in tqdm(range(20)):
+    # convergence_times = np.zeros((len(alphas), len(gammas)))
+    convergence_times = []
     # with multiprocessing.Pool(32) as pool:
     #     convergence_times = pool.map(rl.Q_learning_parallel, paramslist)
 
+    # for row, alpha in enumerate(alphas):
+    #     for col,gamma in enumerate(gammas):
+    #        print(row, col)
+    #        # Q_dict, convergence_time = rl.Q_learning_base(moves, alpha, gamma)
+    #        convergence_time = rl.Q_learning_base(moves, alpha, gamma)
+    #        convergence_times[row, col] = convergence_time
+    gamma = 0.33
     for row, alpha in enumerate(alphas):
-        for col,gamma in enumerate(gammas):
-            print(row, col)
-            # Q_dict, convergence_time = rl.Q_learning_base(moves, alpha, gamma)
-            convergence_time = rl.Q_learning_base(moves, alpha, gamma)
-            convergence_times[row, col] = convergence_time
-
-
-    with open(f'logs/convergence_times_{run}.pickle', 'wb') as f:
+        convergence_time = rl.Q_learning_base(moves, alpha, gamma)
+    convergence_times.append(convergence_time)
+    with open(f'logs2/convergence_times_{run}.pickle', 'wb') as f:
         pickle.dump(convergence_times, f)
 
 moves = [move1, move2, move3, move4]
