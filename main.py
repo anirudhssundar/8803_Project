@@ -47,14 +47,14 @@ move4 = poke.move(name='snooze',
 # ut.summary(pokemon2)
 
 moves = [move1, move2, move3, move4]
-alphas = np.arange(0.1, 0.9, 0.3)
+alphas = np.arange(0.1, 0.9, 0.2)
 gammas = np.arange(0.1, 0.9, 0.3)
 
 hyperparams = list(itertools.product(alphas, gammas))
 
 paramslist = [[moves, i] for i in hyperparams]
 
-for run in tqdm(range(50)):
+for run in tqdm(range(10)):
     convergence_times = np.zeros((len(alphas), len(gammas)))
 
     # with multiprocessing.Pool(32) as pool:
