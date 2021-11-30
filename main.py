@@ -66,6 +66,10 @@ for run in tqdm(range(20)):
     #        # Q_dict, convergence_time = rl.Q_learning_base(moves, alpha, gamma)
     #        convergence_time = rl.Q_learning_base(moves, alpha, gamma)
     #        convergence_times[row, col] = convergence_time
+
+    # Logs2 => gamma = 0.33
+    # Logs3 => gamma = 0.66
+
     gamma = 0.66
     for row, alpha in enumerate(alphas):
         convergence_time = rl.Q_learning_base(moves, alpha, gamma)
