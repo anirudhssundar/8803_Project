@@ -69,7 +69,7 @@ for run in tqdm(range(20)):
     gamma = 0.33
     for row, alpha in enumerate(alphas):
         convergence_time = rl.Q_learning_base(moves, alpha, gamma)
-    convergence_times.append(convergence_time)
+        convergence_times.append(convergence_time)
     with open(f'logs2/convergence_times_{run}.pickle', 'wb') as f:
         pickle.dump(convergence_times, f)
 
