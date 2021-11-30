@@ -57,7 +57,7 @@ def Q_learning_base(moves, alpha, gamma):
     # alpha = 0.25
     # gamma = 0.95
 
-    eps = 1e-4
+    eps = 1e-3
     iter_diff = eps + 3
 
     start_time = time.time()
