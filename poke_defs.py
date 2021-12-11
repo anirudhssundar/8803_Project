@@ -6,7 +6,7 @@ class Squirtle:
     # Stats for a level 5 Squirtle
     name = 'Squritle'
     max_HP = 20
-    max_atk = 11
+    max_atk = 11 # Changed from 11
     max_def = 13
     max_spd = 10
 
@@ -40,7 +40,7 @@ class Bulbasaur:
     # Stats for a level 5 Bulbasaur
     name = 'Bulbasaur'
     max_HP = 21
-    max_atk = 11
+    max_atk = 11 # Changed from 11
     max_def = 11
     max_spd = 11
 

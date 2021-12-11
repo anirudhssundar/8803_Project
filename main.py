@@ -91,7 +91,7 @@ print(convergence_time)
 # Q_dict, convergence_time = rl.Q_learning_attack_always_Char(moves, alpha=0.25, gamma=0.2)
 # Simulate a game
 
-"""
+
 results = []
 for i in range(100000):
     with ut.HiddenPrints():
@@ -124,6 +124,7 @@ for i in tqdm(range(10000)):
         pokemon1 = poke.Bulbasaur()
         pokemon2 = poke.Squirtle()
 
+        poke.turn(pokemon2, pokemon1, move2, move3)
         match_turn=1
 
         init_state = (20,20,0)
@@ -135,10 +136,10 @@ for i in tqdm(range(10000)):
 
             if match_turn==1:
                 move_a = move3
-                move_b = move2
+                move_b = move1
             elif match_turn==2:
-                move_a = move3
-                move_b = move2
+                move_a = move1
+                move_b = move1
             elif match_turn==3:
                 move_a= move1
                 move_b = move1
