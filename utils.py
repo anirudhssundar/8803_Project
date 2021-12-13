@@ -1,6 +1,8 @@
 import numpy as np
 import functools
 import os,sys
+import pickle
+import matplotlib.pyplot as plt
 
 def damage(pokemon1, pokemon2, move):
 
@@ -121,3 +123,26 @@ def avg_convergence_time():
         del data
     print(np.argmin(times), min(times)/len(os.listdir('logs/')))
     return times
+
+
+def plot_convergence_times():
+    folders = ['logs2/','logs/','logs3/']
+    gammas = [0.33,0.66,0.99]
+    i=0
+    for folder in folders:
+        convergence_array = np.zeros(8)
+        for file in os.listdir(folder):
+            with open(f'{folder}/{file}', 'rb') as f:
+                data = pickle.load(f)
+            convergence_array += data
+        convergence_array = convergence_array/20.0
+        alphas = np.arange(0.1, 0.9, 0.1)
+        plt.plot(alphas, convergence_array, label='gamma='+str(gammas[i]))
+        
+        # plt.title(r'Convergence times for $\gamma$=0.99')
+        # plt.legend(str(gammas[i]))
+        i += 1
+    plt.legend()
+    plt.xlabel(r'$\alpha$')
+    plt.ylabel('Convergence time (seconds)')
+    plt.savefig('convergence_times.png')

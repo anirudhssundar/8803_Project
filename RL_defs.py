@@ -68,6 +68,9 @@ def Q_learning_base(moves, alpha, gamma):
         with ut.HiddenPrints():
             pokemon1 = poke.Squirtle()
             pokemon2 = poke.Bulbasaur()
+
+            poke.turn(pokemon2, pokemon1, move2, move3)
+
             while((pokemon2.HP>0) and (pokemon1.HP>0)):
 
                 state = rl.get_state(pokemon1, pokemon2)

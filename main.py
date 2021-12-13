@@ -67,23 +67,24 @@ for run in tqdm(range(20)):
     #        convergence_time = rl.Q_learning_base(moves, alpha, gamma)
     #        convergence_times[row, col] = convergence_time
 
+    # Logs => gamma = 0.66
     # Logs2 => gamma = 0.33
-    # Logs3 => gamma = 0.66
+    # Logs3 => gamma = 0.99
 
-    gamma = 0.66
+    gamma = 0.33
     for row, alpha in enumerate(alphas):
         convergence_time = rl.Q_learning_base(moves, alpha, gamma)
         convergence_times.append(convergence_time)
-    with open(f'logs3/convergence_times_{run}.pickle', 'wb') as f:
+    with open(f'logs2/convergence_times_{run}.pickle', 'wb') as f:
         pickle.dump(convergence_times, f)
-
+"""
 moves = [move1, move2, move3, move4]
 alpha=0.25
 gamma=0.9
 
 convergence_time = rl.Q_learning_base(moves, alpha, gamma)
 print(convergence_time)
-
+"""
 # Q_dict, convergence_time = rl.Q_learning_attack_always(moves, alpha, gamma)
 
 # Q_dict, convergence_time = rl.Q_learning_base_Char(moves, alpha=0.25, gamma=0.9)
@@ -91,7 +92,7 @@ print(convergence_time)
 # Q_dict, convergence_time = rl.Q_learning_attack_always_Char(moves, alpha=0.25, gamma=0.2)
 # Simulate a game
 
-
+"""
 results = []
 for i in range(100000):
     with ut.HiddenPrints():
@@ -113,9 +114,9 @@ for i in range(100000):
             # played_moves.append(move.name)
             state = rl.get_state(pokemon1, pokemon2)
         results.append(t)
+"""
 
-
-
+"""
 # Simulate policy based situation
 results = []
 for i in tqdm(range(10000)):
